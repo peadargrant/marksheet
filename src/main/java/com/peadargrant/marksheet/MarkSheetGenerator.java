@@ -154,7 +154,7 @@ public class MarkSheetGenerator {
             
             for ( int m = 0 ; m < question.size() ; m++ ) {
                 Integer marksForPart = question.get(m);
-                String questionText = "Q" + (k + 1) + "." + (m+1);
+                String questionText = "Q" + (k + 1) + "(" + (char)(97+m) + ")";
                 
                 XSSFCell headerCell = headerRow.createCell(column);
                 headerCell.setCellValue(questionText);
@@ -190,7 +190,7 @@ public class MarkSheetGenerator {
       
     }
     
-    private void insertQuestionTotals() {
+    private void insertQuestionTotals() throws Exception {
         
         totalsStart = column;
         
@@ -212,6 +212,17 @@ public class MarkSheetGenerator {
             column++;
         }
         
+        String startIndex = CellReference.convertNumToColString(totalsStart) + "2";
+        String endIndex = CellReference.convertNumToColString(totalsEnd) + "2";
+        SheetConditionalFormatting sheetCF = sheet.getSheetConditionalFormatting();
+        ConditionalFormattingRule rule1 = sheetCF.createConditionalFormattingRule(ComparisonOperator.GT, "");
+        PatternFormatting fill1 = rule1.createPatternFormatting();
+        fill1.setFillBackgroundColor(IndexedColors.LIGHT_GREEN.index);
+        fill1.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
+        CellRangeAddress[] regions = {
+                CellRangeAddress.valueOf(startIndex+":"+endIndex)
+        };
+        sheetCF.addConditionalFormatting(regions, rule1);
     }
     
     private void insertTotal() throws Exception {
