@@ -4,23 +4,25 @@
  */
 package com.peadargrant.marksheet;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.ComparisonOperator;
+import org.apache.poi.ss.usermodel.ConditionalFormattingRule;
 import org.apache.poi.ss.usermodel.DataValidation;
 import org.apache.poi.ss.usermodel.DataValidation.ErrorStyle;
 import org.apache.poi.ss.usermodel.DataValidationConstraint;
 import org.apache.poi.ss.usermodel.DataValidationConstraint.OperatorType;
 import org.apache.poi.ss.usermodel.Header;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.PatternFormatting;
+import org.apache.poi.ss.usermodel.SheetConditionalFormatting;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFDataValidationHelper;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -38,7 +40,7 @@ public class MarkSheetGenerator {
     private final XSSFWorkbook wb;
     private final XSSFSheet sheet;
     private final XSSFFont defaultFont, headerFont;
-    private final CellStyle defaultStyle, headerStyle;
+    private final CellStyle defaultStyle, headerStyle, firstStyle;
     int column;
     private final List<Integer> startIndices, endIndices;
     private final XSSFRow headerRow, detailRow;
@@ -72,6 +74,11 @@ public class MarkSheetGenerator {
         // Styles
         defaultStyle=wb.createCellStyle();
         defaultStyle.setFont(defaultFont);
+        
+        firstStyle = wb.createCellStyle();
+        firstStyle.setFillForegroundColor(IndexedColors.SKY_BLUE.getIndex());
+        firstStyle.setFillPattern(PatternFormatting.FINE_DOTS);
+        firstStyle.setFont(defaultFont);
         
         headerStyle=wb.createCellStyle();
         headerStyle.setFillBackgroundColor(IndexedColors.TEAL.getIndex());
@@ -155,7 +162,12 @@ public class MarkSheetGenerator {
 
                 XSSFCell detailCell = detailRow.createCell(column);
                 detailCell.setCellValue(0);
-                detailCell.setCellStyle(defaultStyle);
+                if ( m==0 ) {
+                    detailCell.setCellStyle(firstStyle);
+                }
+                else {
+                    detailCell.setCellStyle(defaultStyle);
+                }
                 
                 XSSFDataValidationHelper validationHelper = new XSSFDataValidationHelper(sheet);
                 DataValidationConstraint constraint = validationHelper.createIntegerConstraint(OperatorType.BETWEEN, "0", marksForPart.toString());
@@ -226,6 +238,16 @@ public class MarkSheetGenerator {
         XSSFCell detailCell = detailRow.createCell(column);
         detailCell.setCellFormula(totalFormula.toString());
         detailCell.setCellStyle(defaultStyle);
+        SheetConditionalFormatting sheetCF = sheet.getSheetConditionalFormatting();
+        ConditionalFormattingRule rule1 = sheetCF.createConditionalFormattingRule(ComparisonOperator.GT, "40");
+        PatternFormatting fill1 = rule1.createPatternFormatting();
+        fill1.setFillBackgroundColor(IndexedColors.LIGHT_GREEN.index);
+        fill1.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
+        CellRangeAddress[] regions = {
+                CellRangeAddress.valueOf(CellReference.convertNumToColString(column)+"2")
+        };
+        sheetCF.addConditionalFormatting(regions, rule1);
+        
         
     }
     
