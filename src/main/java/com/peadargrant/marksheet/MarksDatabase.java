@@ -23,15 +23,14 @@ import org.w3c.dom.NodeList;
  */
 public class MarksDatabase {
     
-    private Document doc;
-    private XPath xp;
+    private final Document doc;
+    private final XPath xp;
     
-    public MarksDatabase(String filename) throws Exception {
+    public MarksDatabase(File inputFile) throws Exception {
         
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         
         DocumentBuilder db = dbf.newDocumentBuilder();
-        File inputFile = new File(filename);
         doc = db.parse(inputFile);
         doc.normalize();
 
@@ -48,8 +47,11 @@ public class MarksDatabase {
     
     public int bestOf() throws Exception {
         XPathExpression xpe = xp.compile("/marks/bestOf");
-        Double marksPerQuestion = (Double) xpe.evaluate(doc, XPathConstants.NUMBER);
-        return marksPerQuestion.intValue();
+        Double nBestOf = (Double) xpe.evaluate(doc, XPathConstants.NUMBER);
+        if ( nBestOf.isNaN() ) {
+            return questions().size();
+        }
+        return nBestOf.intValue();
     }
     
     public List<List<Integer>> questions() throws Exception {

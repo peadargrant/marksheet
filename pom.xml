@@ -36,5 +36,28 @@
             <artifactId>openxml4j</artifactId>
             <version>1.0-beta</version>
         </dependency>
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>8.0.6</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
+    <build>
+        <finalName>MarkSheet</finalName>
+        <plugins>
+                            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <vendor>Peadar Grant</vendor>
+                    <mainClass>com.peadargrant.marksheet.MainApp</mainClass>
+                    <identifier>com.peadargrant.marksheet.MainApp</identifier>
+                    <nativeReleaseVersion>${project.version}</nativeReleaseVersion>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

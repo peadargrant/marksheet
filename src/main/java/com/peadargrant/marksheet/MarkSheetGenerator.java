@@ -35,7 +35,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class MarkSheetGenerator {
     
-    private final String inputFilename, outputFilename;
     private final MarksDatabase mdb;
     private final XSSFWorkbook wb;
     private final XSSFSheet sheet;
@@ -45,13 +44,13 @@ public class MarkSheetGenerator {
     private final List<Integer> startIndices, endIndices;
     private final XSSFRow headerRow, detailRow;
     private int totalsStart, totalsEnd;
+    private File outputFile; 
     
     
-    public MarkSheetGenerator(String inputFilename, String outputFilename) throws Exception {
+    public MarkSheetGenerator(File inputFile, File outputFile) throws Exception {
         
-        this.inputFilename = inputFilename;
-        this.outputFilename = outputFilename;
-        mdb = new MarksDatabase(inputFilename);
+        mdb = new MarksDatabase(inputFile);
+        this.outputFile = outputFile; 
         
         wb = new XSSFWorkbook();
         sheet = wb.createSheet("EXAM_MARKS");
@@ -115,7 +114,7 @@ public class MarkSheetGenerator {
         Header header = sheet.getHeader();
         header.setCenter("Detail marks sheet");
         
-        FileOutputStream fos =new FileOutputStream(new File(outputFilename));
+        FileOutputStream fos =new FileOutputStream(outputFile);
 	wb.write(fos);
 	fos.close();
         
