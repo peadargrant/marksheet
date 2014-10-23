@@ -32,7 +32,7 @@
       <Label fx:id="inputFilenameLabel" layoutX="12.0" layoutY="108.0" prefHeight="16.0" prefWidth="292.0" text="/nofile" />
       <Button layoutX="14.0" layoutY="146.0" mnemonicParsing="false" onAction="#chooseOutputFile" prefHeight="26.0" prefWidth="292.0" text="Choose destination" />
       <Label fx:id="outputFilenameLabel" layoutX="14.0" layoutY="179.0" prefHeight="16.0" prefWidth="292.0" text="/nofile" />
-      <Button layoutX="14.0" layoutY="211.0" mnemonicParsing="false" onAction="#generateExcelSheet" prefHeight="26.0" prefWidth="292.0" text="Generate Excel sheet" />
+      <Button defaultButton="true" layoutX="14.0" layoutY="211.0" mnemonicParsing="false" onAction="#generateExcelSheet" prefHeight="26.0" prefWidth="292.0" text="Generate Excel sheet" />
       <Label fx:id="statusLabel" layoutX="14.0" layoutY="247.0" prefHeight="16.0" prefWidth="292.0" text="Ready." />
     </children>
 </AnchorPane>
