@@ -2,7 +2,7 @@
  *  Copyright Peadar Grant.
  *  All rights reserved.
  */
-package com.peadargrant.marksheet;
+package com.peadargrant.marksheet.core;
 
 import java.io.File;
 import java.io.FileOutputStream;
