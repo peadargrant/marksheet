@@ -1,5 +1,7 @@
 # MarkSheet
 
+(c) 2015 Peadar Grant
+
 ## Purpose 
 
 MarkSheet lets you generate Microsoft Excel (XLSX) files from an XML description of the marking scheme (see sample.xml). 
