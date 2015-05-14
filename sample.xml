@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<marks>
+  <bestOf>4</bestOf>
+  <question>
+    <part>4</part>
+    <part>9</part>
+    <part>5</part>
+    <part>7</part>
+  </question>
+  <question>
+    <part>5</part>
+    <part>7</part>
+    <part>6</part>
+    <part>7</part>
+  </question>
+  <question>
+    <part>4</part>
+    <part>6</part>
+    <part>10</part>
+    <part>5</part>
+  </question>
+  <question>
+    <part>4</part>
+    <part>5</part>
+    <part>12</part>
+    <part>4</part>
+  </question>
+  <question>
+    <part>5</part>
+    <part>5</part>
+    <part>10</part>
+    <part>5</part>
+  </question>
+</marks>
