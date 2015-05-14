@@ -61,7 +61,7 @@ public class MarksDatabase {
         
         List<List<Integer>> marksList = new ArrayList<>(); 
         
-        XPathExpression partExpression = xp.compile("part/weight");
+        XPathExpression partExpression = xp.compile("part");
         
         for ( int k = 0 ; k < questionList.getLength(); k++ ) {
             
