@@ -29,10 +29,6 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-/**
- *
- * @author Peadar Grant
- */
 public class MarkSheetGenerator {
     
     private final MarksDatabase mdb;
@@ -44,12 +40,24 @@ public class MarkSheetGenerator {
     private final List<Integer> startIndices, endIndices;
     private final XSSFRow headerRow, detailRow;
     private int totalsStart, totalsEnd;
-    private File outputFile; 
+    private final File outputFile; 
     
     
     public MarkSheetGenerator(File inputFile, File outputFile) throws Exception {
         
-        mdb = new MarksDatabase(inputFile);
+        switch (inputFile.getName().split("\\.")[1]) {
+            case "txt":
+                System.out.println("reading marking scheme in plaintext mode");
+                mdb = new TxtMarksDatabase(inputFile);
+                break;
+            case "xml":
+                System.out.println("reading marking scheme in XML mode");
+                mdb = new XmlMarksDatabase(inputFile);
+                break;
+            default:
+                throw new Exception("unrecognised marking scheme file format");
+        } 
+        
         this.outputFile = outputFile; 
         
         wb = new XSSFWorkbook();
