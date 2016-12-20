@@ -10,6 +10,14 @@ MarkSheet lets you generate Microsoft Excel (XLSX) files from an XML description
 
 Each question consists of a number of constituent parts. The program sets up the required formulae and allows taking the best of a number of equally-weighted questions.
 
+*** XML format
+
+#+INCLUDE: "sample.xml" src
+
+*** Text format
+
+#+INCLUDE: "sample.txt" src 
+
 ** License
 
 MarkSheet is Free Software, released under the GPL v3.
