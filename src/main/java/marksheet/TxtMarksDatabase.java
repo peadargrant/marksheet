@@ -2,7 +2,7 @@
  *  Copyright Peadar Grant.
  *  All rights reserved.
  */
-package com.peadargrant.marksheet.core;
+package marksheet;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -2,9 +2,9 @@
  *  Copyright Peadar Grant.
  *  All rights reserved.
  */
-package com.peadargrant.marksheet.tool;
+package marksheet;
 
-import com.peadargrant.marksheet.core.MarkSheetGenerator;
+import marksheet.MarkSheetGenerator;
 import java.io.File;
 import java.util.Scanner;
 
