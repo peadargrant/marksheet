@@ -39,6 +39,15 @@ Each question consists of a number of constituent parts. The program sets up the
 
 Note: the text format for now does not allow a "best of" calculation to be done.
 
+* Usage
+
+MarkSheet is a command-line program.
+In Windows you'll need to use the Command Prompt, on Mac the Terminal.
+You will need a Java Runtime installed.
+Change directory using =cd= to the folder where you placed Marksheet and you marking scheme.
+Then type =java -jar marksheet-2.0-SNAPSHOT.jar my_marking_scheme.txt marks.xlsx= to generate the spreadsheet, changing the file names as appropriate.
+MarkSheet will run and print some messages to the terminal before exiting.
+
 * Technical implementation
 
 MarkSheet is written in Java and makes extensive use of the Apache POI libraries to manipulate Microsoft Excel documents.
