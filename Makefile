@@ -15,6 +15,7 @@ sample_from_xml.xlsx: $(JAR) sample.xml
 PUBLISHABLE_FILES=index.html sample_from_txt.xlsx sample_from_xml.xlsx sample.xml sample.txt $(JAR)
 
 publishable: $(PUBLISHABLE_FILES)
+	python3 /Users/peadar/Documents/tools/linkcrawler/linkcrawler.py index.html
 
 sync_files.txt: Makefile
 	./sync_files.sh $(PUBLISHABLE_FILES) > $@
