@@ -4,3 +4,6 @@
 /target/
 /dependency-reduced-pom.xml
 /sample.xlsx
+index.html
+*.xlsx
+sync_files.txt
