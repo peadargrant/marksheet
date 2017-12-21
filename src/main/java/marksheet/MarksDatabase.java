@@ -14,6 +14,7 @@ public interface MarksDatabase {
         
     public int marksPerQuestion() throws Exception;
     public int bestOf() throws Exception;
-    public List<List<Integer>> questions() throws Exception;
+    public int compulsoryQuestions() throws Exception;
+    public List<List<Part>> questions() throws Exception;
     
 }

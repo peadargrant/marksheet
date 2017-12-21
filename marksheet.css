@@ -1,0 +1,20 @@
+body {
+    font-family: sans-serif;
+}
+
+h1 {
+    background-color: black;
+    color: white;
+}
+
+h2 {
+    background-color: lightcyan;
+}
+
+#postamble {
+    color: grey;
+}
+
+#table-of-contents, #table-of-contents>h2 {
+    background-color: lemonchiffon;
+}

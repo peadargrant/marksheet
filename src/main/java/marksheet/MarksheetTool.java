@@ -4,7 +4,6 @@
  */
 package marksheet;
 
-import marksheet.MarkSheetGenerator;
 import java.io.File;
 import java.util.Scanner;
 

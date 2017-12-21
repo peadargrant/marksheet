@@ -6,6 +6,7 @@ package marksheet;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -50,10 +51,7 @@ public class MarkSheetGenerator {
                 System.out.println("reading marking scheme in plaintext mode");
                 mdb = new TxtMarksDatabase(inputFile);
                 break;
-            case "xml":
-                System.out.println("reading marking scheme in XML mode");
-                mdb = new XmlMarksDatabase(inputFile);
-                break;
+            
             default:
                 throw new Exception("unrecognised marking scheme file format");
         } 
@@ -151,16 +149,17 @@ public class MarkSheetGenerator {
     
     private void insertEntryFields() throws Exception {
         
-        List<List<Integer>> marks = mdb.questions();
+        List<List<Part>> marks = mdb.questions();
         
         for ( int k = 0 ; k < marks.size() ; k++ ) {
             
-            List<Integer> question = marks.get(k);
+            List<Part> question = marks.get(k);
             startIndices.add(column);
             int lastColumn = column;
             
             for ( int m = 0 ; m < question.size() ; m++ ) {
-                Integer marksForPart = question.get(m);
+                Part part = question.get(m);
+                BigInteger marksForPart = part.getMarks();
                 String questionText = "Q" + (k + 1) + "(" + (char)(97+m) + ")";
                 
                 XSSFCell headerCell = headerRow.createCell(column);
@@ -183,7 +182,7 @@ public class MarkSheetGenerator {
                 validation.setErrorStyle(ErrorStyle.STOP);
                 validation.createErrorBox(questionText, "Only numeric values are allowed up to "+marksForPart.toString());
                 validation.setShowErrorBox(true);
-                validation.createPromptBox(questionText, "Marked 0 to "+marksForPart.toString());
+                validation.createPromptBox(questionText, "Marked 0 to "+marksForPart.toString()+"\n\n"+part.getCellRubric());
                 validation.setShowPromptBox(true);
                 sheet.addValidationData(validation);
                 
@@ -236,21 +235,24 @@ public class MarkSheetGenerator {
         
         int nQuestions = startIndices.size();
         int bestOf = mdb.bestOf();
-        int nDrop = nQuestions - bestOf;
+        int compulsory = mdb.compulsoryQuestions();
+        int nDrop = nQuestions - compulsory - bestOf;
         
         XSSFCell headerCell = headerRow.createCell(column);
         headerCell.setCellValue("TOTAL");
         headerCell.setCellStyle(headerStyle);
         
-        String startIndex = CellReference.convertNumToColString(totalsStart) + "2";
+        String sumStartIndex = CellReference.convertNumToColString(totalsStart) + "2";
+        String dropStartIndex = CellReference.convertNumToColString(totalsStart+compulsory) + "2";
         String endIndex = CellReference.convertNumToColString(totalsEnd) + "2";
         
-        String range = startIndex + ":" + endIndex;
+        String sumRange = sumStartIndex + ":" + endIndex;
+        String dropRange = dropStartIndex + ":" + endIndex;
         
         StringBuilder totalFormula = new StringBuilder();
-        totalFormula.append("SUM(").append(range).append(")");
+        totalFormula.append("SUM(").append(sumRange).append(")");
         for ( int k = 1 ; k <= nDrop ; k++ ) {
-            totalFormula.append("-SMALL(").append(range).append(",").append(k).append(")");
+            totalFormula.append("-SMALL(").append(dropRange).append(",").append(k).append(")");
         }
 
         XSSFCell detailCell = detailRow.createCell(column);
